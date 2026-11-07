@@ -36,6 +36,16 @@ export default function useTasks() {
     setTasks([newTask, ...tasks]);
   }
 
+  function toggleTask(id) {
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, completed: !task.completed };
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+  }
+
   useEffect(() => {
     loadTasks();
   }, []);
@@ -46,5 +56,5 @@ export default function useTasks() {
     }
   }, [tasks, status]);
 
-  return { tasks, status, loadTasks, addTask };
+  return { tasks, status, loadTasks, addTask, toggleTask };
 }
