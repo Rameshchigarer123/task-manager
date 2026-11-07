@@ -3,7 +3,8 @@ import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
 
 export default function App() {
-  const { tasks, status, loadTasks, addTask, toggleTask } = useTasks();
+  const { tasks, status, loadTasks, addTask, toggleTask, editTask, deleteTask } =
+    useTasks();
 
   if (status === 'loading') {
     return <p>Loading tasks…</p>;
@@ -22,7 +23,12 @@ export default function App() {
     <main>
       <h1>Tasks</h1>
       <TaskForm onAdd={addTask} />
-      <TaskList tasks={tasks} onToggle={toggleTask} />
+      <TaskList
+        tasks={tasks}
+        onToggle={toggleTask}
+        onEdit={editTask}
+        onDelete={deleteTask}
+      />
     </main>
   );
 }

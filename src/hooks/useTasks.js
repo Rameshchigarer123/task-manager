@@ -46,6 +46,21 @@ export default function useTasks() {
     setTasks(updatedTasks);
   }
 
+  function editTask(id, newTitle) {
+    const updatedTasks = tasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, title: newTitle };
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+  }
+
+  function deleteTask(id) {
+    const remainingTasks = tasks.filter((task) => task.id !== id);
+    setTasks(remainingTasks);
+  }
+
   useEffect(() => {
     loadTasks();
   }, []);
@@ -56,5 +71,5 @@ export default function useTasks() {
     }
   }, [tasks, status]);
 
-  return { tasks, status, loadTasks, addTask, toggleTask };
+  return { tasks, status, loadTasks, addTask, toggleTask, editTask, deleteTask };
 }
