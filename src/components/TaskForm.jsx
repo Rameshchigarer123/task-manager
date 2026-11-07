@@ -22,37 +22,42 @@ export default function TaskForm({ onAdd }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="title">Task title</label>
-      <input
-        id="title"
-        value={title}
-        onChange={(event) => setTitle(event.target.value)}
-        placeholder="What needs doing?"
-      />
+    <form className="task-form" onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="title">Task title</label>
+        <input
+          id="title"
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+          placeholder="What needs doing?"
+        />
+        {error && <p className="error">{error}</p>}
+      </div>
 
-      <label htmlFor="priority">Priority</label>
-      <select
-        id="priority"
-        value={priority}
-        onChange={(event) => setPriority(event.target.value)}
-      >
-        <option>Low</option>
-        <option>Medium</option>
-        <option>High</option>
-      </select>
+      <div>
+        <label htmlFor="priority">Priority</label>
+        <select
+          id="priority"
+          value={priority}
+          onChange={(event) => setPriority(event.target.value)}
+        >
+          <option>Low</option>
+          <option>Medium</option>
+          <option>High</option>
+        </select>
+      </div>
 
-      <label htmlFor="dueDate">Due date (optional)</label>
-      <input
-        id="dueDate"
-        type="date"
-        value={dueDate}
-        onChange={(event) => setDueDate(event.target.value)}
-      />
+      <div>
+        <label htmlFor="dueDate">Due date (optional)</label>
+        <input
+          id="dueDate"
+          type="date"
+          value={dueDate}
+          onChange={(event) => setDueDate(event.target.value)}
+        />
+      </div>
 
-      <button type="submit">Add task</button>
-
-      {error && <p>{error}</p>}
+      <button type="submit" className="primary">Add task</button>
     </form>
   );
 }

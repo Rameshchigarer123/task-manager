@@ -53,7 +53,7 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }) {
   }
 
   return (
-    <li>
+    <li className={task.completed ? 'task done' : 'task'}>
       <input
         type="checkbox"
         checked={task.completed}
@@ -61,36 +61,42 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }) {
         aria-label={`Mark ${task.title} as done`}
       />
 
-      {isEditing ? (
-        <>
-          <input
-            value={draft}
-            onChange={(event) => setDraft(event.target.value)}
-            onKeyDown={handleKeyDown}
-            aria-label="Edit task title"
-            autoFocus
-          />
-          <button onClick={saveEditing}>Save</button>
-          <button onClick={cancelEditing}>Cancel</button>
-          {error && <span> {error}</span>}
-        </>
-      ) : (
-        <>
-          <span
-            style={{ textDecoration: task.completed ? 'line-through' : 'none' }}
-          >
-            {task.title}
-          </span>
-          <button onClick={startEditing}>Edit</button>
-        </>
-      )}
+      <div>
+        {isEditing ? (
+          <>
+            <input
+              value={draft}
+              onChange={(event) => setDraft(event.target.value)}
+              onKeyDown={handleKeyDown}
+              aria-label="Edit task title"
+              autoFocus
+            />
+            {error && <p className="error">{error}</p>}
+          </>
+        ) : (
+          <span className="task-title">{task.title}</span>
+        )}
 
-      <strong> [{task.priority}] </strong>
-      <span>{task.dueDate ? `Due: ${task.dueDate}` : 'No due date'}</span>
-      {isOverdue && (
-        <strong style={{ color: 'red' }}> Overdue</strong>
-      )}
-      <button onClick={handleDelete}>Delete</button>
+        <div className="task-meta">
+          <span className={`badge badge-${task.priority.toLowerCase()}`}>
+            {task.priority}
+          </span>
+          <span>{task.dueDate ? `Due: ${task.dueDate}` : 'No due date'}</span>
+          {isOverdue && <span className="overdue">Overdue</span>}
+        </div>
+      </div>
+
+      <div className="task-actions">
+        {isEditing ? (
+          <>
+            <button onClick={saveEditing}>Save</button>
+            <button onClick={cancelEditing}>Cancel</button>
+          </>
+        ) : (
+          <button onClick={startEditing}>Edit</button>
+        )}
+        <button className="danger" onClick={handleDelete}>Delete</button>
+      </div>
     </li>
   );
 }

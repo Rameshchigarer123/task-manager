@@ -1,6 +1,6 @@
 export default function FilterTabs({ filter, onChange }) {
   return (
-    <div>
+    <div className="tabs">
       <button onClick={() => onChange('all')} aria-pressed={filter === 'all'}>
         All
       </button>

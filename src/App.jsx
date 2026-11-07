@@ -57,13 +57,30 @@ export default function App() {
   }
 
   const activeCount = tasks.filter((task) => !task.completed).length;
+  const completedCount = tasks.length - activeCount;
+  const percent =
+    tasks.length === 0 ? 0 : Math.round((completedCount / tasks.length) * 100);
 
   return (
     <main>
-      <h1>Tasks</h1>
-      <p>
-        {activeCount} {activeCount === 1 ? 'task' : 'tasks'} left
-      </p>
+      <header className="hero">
+        <h1>My tasks</h1>
+        <p className="hero-sub">
+          {activeCount} {activeCount === 1 ? 'task' : 'tasks'} left,{' '}
+          {completedCount} of {tasks.length} done
+        </p>
+        <div
+          className="progress"
+          role="progressbar"
+          aria-label="Tasks completed"
+          aria-valuenow={percent}
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          <div className="progress-fill" style={{ width: `${percent}%` }} />
+        </div>
+      </header>
+
       <TaskForm onAdd={addTask} />
       <FilterTabs filter={filter} onChange={setFilter} />
       <Toolbar
