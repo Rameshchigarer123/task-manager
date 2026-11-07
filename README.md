@@ -1,16 +1,39 @@
-# React + Vite
+# Task Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Live demo: https://task-manager-flax-zeta.vercel.app
 
-Currently, two official plugins are available:
+A one-page task manager built with React (Vite), function components and hooks only. No backend, no UI library and no state library.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## How to run
 
-## React Compiler
+    npm install
+    npm run dev
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Then open http://localhost:5173.
 
-## Expanding the Oxlint configuration
+## What works
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+- Loads tasks from `public/tasks.json` on the first visit, with a loader and an error message with a Retry button
+- Saves every change to localStorage and loads from it on later visits
+- Add a task (blank or space-only titles are rejected, Enter submits)
+- Task list with priority badge, due date, checkbox and strike-through for completed tasks
+- Edit a title in place (Enter saves, Escape cancels, blank is not allowed)
+- Delete with a confirmation
+- All / Active / Completed tabs and a "tasks left" counter
+- Case-insensitive search that works with the tabs, and sort by due date or priority
+- Red "Overdue" label for incomplete tasks past their due date
+- Responsive layout for a 375px phone and for desktop
+- Deployed on Vercel
+
+## Design notes
+
+- `useTasks` holds the only copy of the tasks, plus the loading and saving logic.
+- The visible list, sort order, counter and progress bar are calculated on each render, never stored.
+- Updates create new arrays and objects, so nothing is mutated.
+- The app is split into small components: `TaskForm`, `FilterTabs`, `Toolbar`, `TaskList` and `TaskItem`.
+
+## Not done
+
+- Undo after delete
+- Light and dark theme toggle
+- Unit tests
