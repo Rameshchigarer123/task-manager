@@ -1,9 +1,20 @@
 import { useState } from 'react';
 
+function getToday() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 export default function TaskItem({ task, onToggle, onEdit, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [draft, setDraft] = useState(task.title);
   const [error, setError] = useState('');
+
+  const isOverdue =
+    !task.completed && task.dueDate !== null && task.dueDate < getToday();
 
   function startEditing() {
     setDraft(task.title);
@@ -76,6 +87,9 @@ export default function TaskItem({ task, onToggle, onEdit, onDelete }) {
 
       <strong> [{task.priority}] </strong>
       <span>{task.dueDate ? `Due: ${task.dueDate}` : 'No due date'}</span>
+      {isOverdue && (
+        <strong style={{ color: 'red' }}> Overdue</strong>
+      )}
       <button onClick={handleDelete}>Delete</button>
     </li>
   );
